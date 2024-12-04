@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/shreyash/.zsh/completions:"* ]]; then export FPATH="/home/shreyash/.zsh/completions:$FPATH"; fi
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -85,3 +87,4 @@ switch_dm(){
     sudo systemctl disable $1 &&
     sudo systemctl enable $2
 }
+. "/home/shreyash/.deno/env"
