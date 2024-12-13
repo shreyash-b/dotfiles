@@ -17,7 +17,8 @@ local on_attach = function(client, bufnr)
   bufmap('<leader>lr', vim.lsp.buf.rename, "Rename Symbol")
   bufmap('<leader>lf', vim.lsp.buf.format, "Format Code")
   bufmap('<leader>li', vim.lsp.buf.incoming_calls, "Incoming Calls")
-  bufmap('<leader>lh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, "Toogle Inlay Hints")
+  bufmap('<leader>lh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+    "Toogle Inlay Hints")
 
   if client.supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
@@ -48,7 +49,7 @@ return {
     require("mason").setup()
     require("fidget").setup {
       progress = {
-        ignore_already_done = true
+        ignore_done_already = true
       }
     }
 
