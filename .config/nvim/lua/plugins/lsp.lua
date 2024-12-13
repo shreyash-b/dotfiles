@@ -49,8 +49,11 @@ return {
     require("mason").setup()
     require("fidget").setup {
       progress = {
-        ignore_done_already = true
-      }
+        ignore_done_already = true,
+        display = {
+          done_ttl = 1
+        }
+      },
     }
 
     local capabilities = vim.tbl_deep_extend(
