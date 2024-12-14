@@ -20,6 +20,10 @@ local on_attach = function(client, bufnr)
   bufmap('<leader>lh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
     "Toogle Inlay Hints")
 
+  bufmap('<leader>lq', vim.diagnostic.setqflist, "Toogle Diagnostic Quickfix")
+  bufmap('d]', vim.diagnostic.goto_next, 'Next Diagnostic')
+  bufmap('d[', vim.diagnostic.goto_prev, 'Previous Diagnostic')
+
   if client.supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
