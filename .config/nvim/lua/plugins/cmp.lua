@@ -3,6 +3,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
+    "https://codeberg.org/FelipeLema/cmp-async-path",
     {
       "windwp/nvim-autopairs",
       event = "InsertEnter",
@@ -40,6 +41,8 @@ return {
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "buffer" },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'async_path' },
       }
     }
 
