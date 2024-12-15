@@ -1,4 +1,7 @@
-local on_attach = function(client, bufnr)
+local on_attach = function(args)
+  local bufnr = args.buf
+  local client = vim.lsp.get_client_by_id(args.data.client_id)
+
   local bufmap = function(lhs, rhs, desc)
     local opts = { desc = desc, buffer = bufnr }
     vim.keymap.set('n', lhs, rhs, opts)
@@ -21,10 +24,10 @@ local on_attach = function(client, bufnr)
     "Toogle Inlay Hints")
 
   bufmap('<leader>lq', vim.diagnostic.setqflist, "Toogle Diagnostic Quickfix")
-  bufmap('d]', vim.diagnostic.goto_next, 'Next Diagnostic')
-  bufmap('d[', vim.diagnostic.goto_prev, 'Previous Diagnostic')
+  bufmap(']d', vim.diagnostic.goto_next, 'Next Diagnostic')
+  bufmap('[d', vim.diagnostic.goto_prev, 'Previous Diagnostic')
 
-  if client.supports_method("textDocument/formatting") then
+  if client and client.supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
@@ -67,16 +70,20 @@ return {
       require("cmp_nvim_lsp").default_capabilities()
     )
 
+    ---@diagnostic disable: missing-fields
     require("mason-lspconfig").setup({
       ensure_installed = { "lua_ls", "rust_analyzer" },
       handlers = {
         function(server_name)
           require("lspconfig")[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach
+            capabilities = capabilities
           }
-        end
+        end,
       }
+    })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = on_attach
     })
   end
 }
