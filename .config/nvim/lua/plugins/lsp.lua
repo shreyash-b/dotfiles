@@ -31,7 +31,7 @@ local on_attach = function(args)
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
-    bufmap("<leader>qW", ":noautocmd w", "Write without formatting")
+    bufmap("<leader>W", ":noautocmd w", "Write without formatting")
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,

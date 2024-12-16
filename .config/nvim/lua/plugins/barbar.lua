@@ -22,7 +22,7 @@ return {
       { "<leader>bp", "<cmd>BufferPrevious<cr>",          desc = "Previous Buffer" },
       { "H",          "<cmd>BufferPrevious<cr>",          desc = "Previous Buffer" },
 
-      { "<leader>qb", "<cmd>BufferClose<cr>",             desc = "Close Buffer" },
+      -- { "<leader>qb", "<cmd>BufferClose<cr>",             desc = "Close Buffer" },
     })
   end,
 
