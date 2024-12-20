@@ -1,6 +1,6 @@
 local init = function()
   vim.o.background = "dark"
-  vim.cmd.colorscheme "catppuccin"
+  vim.cmd.colorscheme "gruvbox"
 end
 
 return {
