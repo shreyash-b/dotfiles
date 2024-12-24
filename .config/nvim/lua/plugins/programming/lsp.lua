@@ -27,11 +27,26 @@ local on_attach = function(args)
   bufmap(']d', vim.diagnostic.goto_next, 'Next Diagnostic')
   bufmap('[d', vim.diagnostic.goto_prev, 'Previous Diagnostic')
 
+  -- override settings for rust
+  if client and client.name == "rust_analyzer" then
+    -- bufmap('<leader>la', function() vim.cmd.RustLsp("codeAction") end, "Code Action")
+    for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+      local default_diagnostic_handler = vim.lsp.handlers[method]
+      vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+          return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+      end
+    end
+  end
+
+
   if client and client.supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
-    bufmap("<leader>W", ":noautocmd w", "Write without formatting")
+    bufmap("<leader>W", ":noautocmd w<cr>", "Write without formatting")
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
@@ -43,6 +58,7 @@ local on_attach = function(args)
   end
 end
 
+
 return {
   "williamboman/mason.nvim",
   dependencies = {
@@ -50,7 +66,8 @@ return {
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
     -- "hrsh7th/cmp-nvim-lsp",
-    "saghen/blink.cmp"
+    "saghen/blink.cmp",
+    "mrcjkb/rustaceanvim"
   },
 
   config = function()
@@ -75,6 +92,9 @@ return {
             capabilities = capabilities
           }
         end,
+
+        -- rustaceanvim
+        ["rust_analyzer"] = function() end
       }
     })
 
