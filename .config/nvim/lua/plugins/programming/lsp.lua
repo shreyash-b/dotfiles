@@ -27,6 +27,10 @@ local on_attach = function(args)
   bufmap(']d', vim.diagnostic.goto_next, 'Next Diagnostic')
   bufmap('[d', vim.diagnostic.goto_prev, 'Previous Diagnostic')
 
+  -- foldmethod
+  vim.opt.foldmethod = "syntax"
+  vim.opt.foldlevel = 99
+
   -- override settings for rust
   if client and client.name == "rust_analyzer" then
     -- bufmap('<leader>la', function() vim.cmd.RustLsp("codeAction") end, "Code Action")
