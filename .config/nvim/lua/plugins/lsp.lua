@@ -12,12 +12,16 @@ local on_attach = function(args)
   vim.opt.foldlevel = 99
 
   vim.lsp.inlay_hint.enable()
+  bufmap("gt", vim.lsp.buf.type_definition, "Goto type definition")
+  bufmap("gd", vim.lsp.buf.definition, "Goto definition")
+  bufmap("gD", vim.lsp.buf.type_definition, "Goto declaration")
 
-  if client and client.supports_method("textDocument/formatting") then
+  if client and client:supports_method("textDocument/formatting") then
     local augroup = vim.api.nvim_create_augroup("LspCommands", {});
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
     bufmap("<leader>W", ":noautocmd w<cr>", "Write without formatting")
+    bufmap("<leader>cf", vim.lsp.buf.format, "Format File")
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
@@ -73,6 +77,7 @@ return {
         callback = on_attach
       })
     end
+
   },
   {
     "folke/lazydev.nvim",
