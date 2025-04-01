@@ -41,18 +41,18 @@ export LC_ALL=en_US.UTF-8
 
 bindkey "^P" up-line-or-history
 bindkey "^N" down-line-or-history
-bindkey "^[[1;3D" backward-word
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;3A" beginning-of-line # alt+up
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
 bindkey "^[[H" beginning-of-line # Home
-bindkey "^[[1;3B" end-of-line # alt+down
-bindkey "^[[F" end-of-line
+bindkey "^[[1~" beginning-of-line # Home in TMUX
+bindkey "^[[F" end-of-line # End
+bindkey "^[[4~" end-of-line # End in TMUX
 
 # Vim style with alt 
 bindkey "^[h" backward-word
 bindkey "^[l" forward-word
-bindkey "^[j" beginning-of-line # Home
-bindkey "^[k" end-of-line # Home
+bindkey "^[j" beginning-of-line 
+bindkey "^[k" end-of-line 
 
 # Shell Integrations
 eval "$(starship init zsh)"
