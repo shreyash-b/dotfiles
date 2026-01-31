@@ -71,19 +71,40 @@ fi
 alias ls="ls --color=auto"
 alias l="ls -lFh"
 alias la="ls -lFah"
-alias source_idf="source ~/esp/idf/export.sh"
 
 # Created by `pipx` on 2024-09-03 06:58:21
 export PATH="$PATH:$HOME/.local/bin"
 eval "$(register-python-argcomplete pipx)"
 
-
-set_env_var(){
-    echo "Setting $1 to $2"
-    export $1=$2
-}
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+## Create alias for sourcing ESP-IDF
+idf_dirs=()
+for dir in ~/esp/idf* ; do
+  [[ -d "$dir" ]] && idf_dirs+=("$dir")
+done
+
+# If exactly one IDF directory exists → alias it to `idf`
+if (( ${#idf_dirs[@]} == 1 )); then
+  alias idf="source \"${idf_dirs[1]}/export.sh\""
+else
+  for dir in "${idf_dirs[@]}"; do
+    base="${dir##*/}"
+
+    if [[ "$base" == "idf" ]]; then
+      # Plain ~/idf → alias idf
+      alias idf="source \"$dir/export.sh\""
+    else
+      # Extract version after "idf-"
+      version="${base#idf-}"
+
+      # Remove all non-alphanumeric characters (5.5 → 55)
+      clean_version="${version//[^[:alnum:]]/}"
+
+      alias "idf-${clean_version}"="source \"$dir/export.sh\""
+    fi
+  done
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
