@@ -4,6 +4,7 @@
 
 [core]
 	pager = delta
+  editor = nvim
 [init]
 	defaultBranch = main
 
@@ -26,4 +27,4 @@
 
 # include delta config
 [include]
-  path = ~/.config/git/delta
+  path = ~/.config/git/.deltaconfig
