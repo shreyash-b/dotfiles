@@ -1,0 +1,29 @@
+[user]
+  name = "Shreyash Bubane"
+  email = "bubaneshreyash3@gmail.com"
+
+[core]
+	pager = delta
+[init]
+	defaultBranch = main
+
+[rerere]
+	enabled = true
+[push]
+	useForceIfIncludes = true
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	colorMoved = default
+[branch]
+	sort = -committerdate
+[submodule]
+	recurse = true
+[rebase]
+	updateRefs = true
+
+# include delta config
+[include]
+  path = ~/.config/git/delta
