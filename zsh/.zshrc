@@ -72,8 +72,9 @@ alias ls="ls --color=auto"
 alias l="ls -lFh"
 alias la="ls -lFah"
 
-# Created by `pipx` on 2024-09-03 06:58:21
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
+
 eval "$(register-python-argcomplete pipx)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
