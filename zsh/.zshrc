@@ -80,21 +80,26 @@ eval "$(register-python-argcomplete pipx)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ## Create alias for sourcing ESP-IDF
-idf_dirs=()
+_idf_dirs=()
 for dir in ~/esp/idf* ; do
-  [[ -d "$dir" ]] && idf_dirs+=("$dir")
+  [[ -d "$dir" ]] && _idf_dirs+=("$dir")
 done
 
+_source_idf_from() {
+  source "$1/export.sh"
+  alias idf=idf.py
+}
+
 # If exactly one IDF directory exists → alias it to `idf`
-if (( ${#idf_dirs[@]} == 1 )); then
-  alias idf="source \"${idf_dirs[1]}/export.sh\""
+if (( ${#_idf_dirs[@]} == 1 )); then
+  alias idf="_source_idf_from ${_idf_dirs[1]}"
 else
-  for dir in "${idf_dirs[@]}"; do
+  for dir in "${_idf_dirs[@]}"; do
     base="${dir##*/}"
 
     if [[ "$base" == "idf" ]]; then
       # Plain ~/idf → alias idf
-      alias idf="source \"$dir/export.sh\""
+      alias idf="_source_idf_from $dir"
     else
       # Extract version after "idf-"
       version="${base#idf-}"
@@ -102,7 +107,7 @@ else
       # Remove all non-alphanumeric characters (5.5 → 55)
       clean_version="${version//[^[:alnum:]]/}"
 
-      alias "idf-${clean_version}"="source \"$dir/export.sh\""
+      alias "idf-${clean_version}"="_source_idf_from $dir"
     fi
   done
 fi
