@@ -17,7 +17,7 @@ end
 
 return {
   "nvim-tree/nvim-tree.lua",
-  enabled = true,
+  enabled = false,
   config = function()
     require("nvim-tree").setup({
       on_attach = my_on_attach

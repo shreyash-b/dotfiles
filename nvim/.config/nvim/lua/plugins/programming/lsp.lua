@@ -65,6 +65,7 @@ end
 
 return {
   "williamboman/mason.nvim",
+  enabled = false,
   dependencies = {
     "j-hui/fidget.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -86,24 +87,31 @@ return {
     }
 
     local capabilities = require("blink-cmp").get_lsp_capabilities()
+    local cwd = vim.fn.getcwd()
+
+    print('--compile-commands-dir=' .. cwd .. "/build")
+
 
     ---@diagnostic disable: missing-fields
     require("mason-lspconfig").setup({
       ensure_installed = { "lua_ls", "rust_analyzer" },
-      handlers = {
-        function(server_name)
-          require("lspconfig")[server_name].setup {
-            capabilities = capabilities
-          }
-        end,
-
-        -- rustaceanvim
-        ["rust_analyzer"] = function() end
-      }
     })
 
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = on_attach
+    })
+
+    vim.lsp.config('*', {
+      capabilities = capabilities
+    })
+
+    vim.lsp.config('cland', {
+      capabilities = capabilities,
+      cmd = {
+        'cland',
+        '--background-index',
+        '--compile-commands-dir=' .. cwd .. "/build",
+      }
     })
   end
 }
