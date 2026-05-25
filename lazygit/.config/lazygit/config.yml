@@ -3,4 +3,4 @@ git:
     - pager: delta --paging=never
 gui:
   nerdFontsVersion: '3'
-
+  showFileTree: false
