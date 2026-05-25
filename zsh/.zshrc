@@ -71,6 +71,7 @@ fi
 alias ls="ls --color=auto"
 alias l="ls -lFh"
 alias la="ls -lFah"
+alias lg="lazygit"
 
 export PATH="$HOME/.local/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
