@@ -12,7 +12,7 @@
     file-modified-label = [*]
     file-removed-label = [-]
     file-renamed-label = [->]
-    hunk-header-style = omit
+    hunk-header-style = syntax bold
     line-numbers-left-format = " {nm:>3} │"
     line-numbers-left-style = red
     line-numbers-right-format = " {np:>3} │"
